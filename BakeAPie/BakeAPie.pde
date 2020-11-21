@@ -1,4 +1,4 @@
-PImage cursor;
+PImage cursor, logo;
 PFont chancery;
 int scene;
 
@@ -12,6 +12,9 @@ void setup(){
   cursor = loadImage("cursor.png");
   cursor.resize(50, 50);
   
+  logo = loadImage("data/PieFly.png");
+  logo.resize(0, 700);
+  
   chancery = loadFont("Apple-Chancery-35.vlw");
 }
 
@@ -22,10 +25,17 @@ void draw(){
     // start screen setup
     background(#dd5a5d);
     
+    imageMode(CENTER);
+    image(logo, width/2, height/2 - 300);
+    
     // start screen buttons
-    Button start = new Button(width/2, height/2 - 120, "Start!");
-    Button instructions = new Button(width/2, height/2, "Instructions!");
-    Button credits = new Button(width/2, height/2 + 120, "Credits!");
+    Button start = new Button(width/2, height/2, "Start!");
+    Button instructions = new Button(width/2, height/2 + 120, "Instructions!");
+    Button credits = new Button(width/2, height/2 + 240, "Credits!");
+    
+    start.hover();
+    instructions.hover();
+    credits.hover();
     
     if(start.pressed()) scene = 3;
     else if(instructions.pressed()) scene = 1;
