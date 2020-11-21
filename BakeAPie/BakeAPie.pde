@@ -10,6 +10,7 @@ void setup(){
 }
 
 void draw(){
-  background(221, 90, 93);
+  background(#DD5A5D);
   image(cursor, mouseX, mouseY);
+  Button button1 = new Button(height/2, width/2, "test");
 }
