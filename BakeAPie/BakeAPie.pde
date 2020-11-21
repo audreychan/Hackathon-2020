@@ -123,5 +123,6 @@ void draw(){
   }
   
   // cursor
+  imageMode(CORNER);
   image(cursor, mouseX, mouseY);
 }
