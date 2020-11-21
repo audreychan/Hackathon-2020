@@ -1,4 +1,4 @@
-PImage cursor, logo;
+PImage cursor, logo, kitchen, costco;
 PFont chancery;
 int scene;
 String flavor;
@@ -15,7 +15,13 @@ void setup(){
   cursor.resize(50, 50);
   
   logo = loadImage("data/PieFly.png");
-  logo.resize(0, 700);
+  logo.resize(0, 1000);
+  
+  costco = loadImage("costco.png");
+  costco.resize(displayWidth, displayHeight);
+  
+  kitchen = loadImage("kitchen.png");
+  kitchen.resize(displayWidth, displayHeight);
   
   chancery = loadFont("Apple-Chancery-35.vlw");
 }
@@ -28,7 +34,7 @@ void draw(){
   if(scene == 0){
     
     imageMode(CENTER);
-    image(logo, width/2, height/2 - 300);
+    image(logo, width/2, height/2 - 500);
     
     // start screen buttons
     Button start = new Button(width/2, height/2, "Start!");
@@ -62,10 +68,11 @@ void draw(){
   }
   //go inside
   else if(scene == 4){
-    
+    background(194, 194, 255);
+    image(costco, displayWidth/2, displayHeight/2);
     Button inside = new Button(width/2, height/2+200, "go inside");
     
-    if(inside.pressed()) scene = 5;
+    //if(inside.pressed()) scene = 5;
   }
   //pick fruit
   else if(scene == 5){
@@ -101,6 +108,7 @@ void draw(){
   //get home
   else if(scene == 8){
     
+    image(kitchen, 0, 0);
     Button cook = new Button(width/2, height/2+200, "start cooking");
     
     if(cook.pressed()) scene = 9;
