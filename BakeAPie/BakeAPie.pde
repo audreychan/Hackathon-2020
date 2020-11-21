@@ -17,24 +17,10 @@ void draw(){
   background(#dd5a5d);
   
   // start screen buttons
-  fill(#dd9a5a);
-  noStroke();
-  rectMode(CENTER);
-  
-  rect(width/2, height/2 - 120, 250, 100);
-  rect(width/2, height/2, 250, 100);
-  rect(width/2, height/2 + 120, 250, 100);
-  
-  fill(#dd5a9e);
-  textSize(35);
-  textFont(chancery);
-  textAlign(CENTER, CENTER);
-  
-  text("Start!", width/2, height/2 - 100);
-  text("Instructions!", width/2, height/2);
-  text("Credits!", width/2, height/2 + 100);
+  Button start = new Button(width/2, height/2 - 120, "Start!");
+  Button instructions = new Button(width/2, height/2, "Instructions!");
+  Button credits = new Button(width/2, height/2 + 120, "Credits!");
   
   // cursor
   image(cursor, mouseX, mouseY);
-  Button button1 = new Button(height/2, width/2, "test");
 }

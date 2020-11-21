@@ -1,10 +1,11 @@
 class Button{
   
   PFont chancery;
+  int x, y;
   
   public Button(int x, int y, String text){
     
-    chancery = loadFont("Apple-Chancery-25.vlw", 35);
+    chancery = loadFont("Apple-Chancery-35.vlw");
     
     noStroke();
     rectMode(CENTER);
@@ -12,7 +13,7 @@ class Button{
     textSize(35);
     textFont(chancery);
     
-    fill(124, 200);
+    fill(64, 200);
     rect(x+5, y+5, 250, 100);
     
     fill(#dd9a5a);
@@ -21,10 +22,15 @@ class Button{
     fill(0);
     text(text, x, y);
     
+    this.x = x;
+    this.y = y;
   }
   
   public boolean pressed(){
-    return true;
+    if(mousePressed && mouseX <= x+125 && mouseX >= x-125 && mouseY <= y+50 && mouseY >= y-50){
+      return true;
+    }
+    return false;
   }
   
 }
