@@ -19,12 +19,11 @@ void setup(){
 }
 
 void draw(){
+  // start screen setup
+  background(#dd5a5d);
   
   //start scene
   if(scene == 0){
-    // start screen setup
-    background(#dd5a5d);
-    
     imageMode(CENTER);
     image(logo, width/2, height/2 - 300);
     
@@ -32,10 +31,6 @@ void draw(){
     Button start = new Button(width/2, height/2, "Start!");
     Button instructions = new Button(width/2, height/2 + 120, "Instructions!");
     Button credits = new Button(width/2, height/2 + 240, "Credits!");
-    
-    start.hover();
-    instructions.hover();
-    credits.hover();
     
     if(start.pressed()) scene = 3;
     else if(instructions.pressed()) scene = 1;
