@@ -1,4 +1,4 @@
-PImage cursor, logo, kitchen;
+PImage cursor, logo, kitchen, costcoFront;
 PFont chancery;
 int scene;
 String flavor;
@@ -16,6 +16,9 @@ void setup() {
 
   logo = loadImage("data/PieFly.png");
   logo.resize(0, 700);
+
+  costcoFront = loadImage("data/costcoFront.png");
+  costcoFront.resize(width, height);
 
   kitchen = loadImage("data/kitchen.png");
   kitchen.resize(width, height);
@@ -44,6 +47,10 @@ void draw() {
   }
   // instructions
   else if (scene == 1) {
+    textAlign(CENTER, CENTER);
+    fill(#dd9a5a);
+    text("Shop at Costco, make a pie, and finish baking it before the time runs out!\nFollow the instructions at each screen and choose the options to make the perfect pie.\nHave fun on your baking adventure!", width/2, height/2);
+
     Button back = new Button(width/2, height/2+400, "go back");
 
     if (back.pressed()) scene = 0;
@@ -62,6 +69,8 @@ void draw() {
   }
   // go inside
   else if (scene == 4) {
+    image(costcoFront, 0, 0);
+
     Button inside = new Button(width/2, height/2+200, "go inside");
 
     if (inside.pressed()) scene = 5;
