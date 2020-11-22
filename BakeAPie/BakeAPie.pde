@@ -1,15 +1,40 @@
+import java.io.*;
+
 PImage cursor, logo, kitchen, costcoFront, character;
 PFont chancery, cambria;
 int scene, time;
 String flavor;
+//String[] args = new String[] {"python", "email.py"};
+String command = "python projects/Hackathon-2020/BakeAPie/email.py";
 int delay = 60;
 int x, y, speed;
 ArrayList<String> cart = new ArrayList<String>();
 
-void setup() {
+void setup() throws RuntimeException {
   fullScreen();
   background(0);
   noCursor();
+
+  try {
+    //Process proc = new ProcessBuilder(args).start();
+    //Runtime.getRuntime().exec("python email.py");
+    Process proc = Runtime.getRuntime().exec(command);
+
+    BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+
+    String line = "";
+    while ((line = reader.readLine()) != null) {
+      System.out.print(line + "\n");
+    }
+
+    proc.waitFor();
+  } 
+  catch (IOException e) {
+    throw new RuntimeException(e);
+  } 
+  catch (InterruptedException e) {
+    throw new RuntimeException(e);
+  }
 
   scene = 0;
   flavor = "unidentified";
@@ -29,7 +54,7 @@ void setup() {
 
   kitchen = loadImage("data/kitchen.png");
   kitchen.resize(width, height);
-  
+
   character = loadImage("data/pentagon.png");
   character.resize(0, 30);
 
@@ -82,13 +107,13 @@ void draw() {
     if (back.pressed()) scene = 0;
   }
   //past time
-  else if(scene == 3){
+  else if (scene == 3) {
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
     //text("In the last game, you spent a " + j + " average time playing. You will get a " + j + "time.", width/2, height/2+300);
     text("You will have ____ to complete this game.", width/2, height/2+100);
-    
-    if(time >= delay){
+
+    if (time >= delay) {
       Button cont = new Button(width/2, height/2+200, "continue");
 
       if (cont.pressed()) {
@@ -98,34 +123,34 @@ void draw() {
     }
   }
   //go inside
-  else if(scene == 4){
+  else if (scene == 4) {
     image(costcoFront, 0, 0);
 
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
-    text("You have arrived at Costco to buy the ingredients for your pie! Roam around the store to find everything you need.", width/2, height/2+100);
-    
-    if(time >= delay){
+    text("You have arrived at Costco to buy the ingredients for your pie! Roam around the store to find everything you need.", width/2, height/2 - 500);
+
+    if (time >= delay) {
       Button inside = new Button(width/2, height/2+200, "go inside");
-      
-      if(inside.pressed()) {
+
+      if (inside.pressed()) {
         time = 0;
         scene = 5;
       }
     }
   }
   //pick fruit
-  else if(scene == 5){
+  else if (scene == 5) {
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
     text("The first thing you come across is the fruit. Pick the fruit you want to make your pie with!", width/2, height/2+100);
-    
-    if(time >= delay){
+
+    if (time >= delay) {
       Button apple = new Button(width/2 - 300, height/2+200, "Apple");
       Button berries = new Button(width/2, height/2+200, "Berries");
       Button pumpkin = new Button(width/2 + 300, height/2+200, "Pumpkin");
-      
-      if(apple.pressed()){
+
+      if (apple.pressed()) {
         flavor = "apple";
         time = 0;
         scene = 6;
@@ -151,30 +176,30 @@ void draw() {
     rect(width/2-250, height/2-350, 200, 100); //dairy
     rect(width/2+50, height/2-350, 200, 100); //spices
     rect(width/2+50, height/2+50, 200, 100); //frozen
-    
+
     //ellipse(x, y, 10, 10);
     image(character, x, y);
-    
+
     fill(0);
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
     text("Use WASD to move around the map! Pick up the ingredients you need by going into that area and clicking the ingredient.", width/2, height/2-700);
-    
-    if(x >= width/2-250 && x <= width/2-50 && y >= height/2-350 && y <= height/2-250){ //dairy
+
+    if (x >= width/2-250 && x <= width/2-50 && y >= height/2-350 && y <= height/2-250) { //dairy
       Button butter = new Button(width/2, height/2+200, "butter");
       Button whippedCream = new Button(width/2, height/2+200, "whipped cream");
-      
-      if(butter.pressed()) cart.add("Butter");
-      if(whippedCream.pressed()) cart.add("Whipped Cream");
+
+      if (butter.pressed()) cart.add("Butter");
+      if (whippedCream.pressed()) cart.add("Whipped Cream");
     }
-    if(x >= width/2-250 && x <= width/2-50 && y >= height/2-350 && y <= height/2-250){ //spices
+    if (x >= width/2-250 && x <= width/2-50 && y >= height/2-350 && y <= height/2-250) { //spices
       Button cinnamon = new Button(width/2, height/2+200, "Cinnamon");
       Button ginger = new Button(width/2, height/2+200, "Ginger");
       Button cloves = new Button(width/2, height/2+200, "Cloves");
-      
-      if(cinnamon.pressed()) cart.add("Cinnamon");
-      if(ginger.pressed()) cart.add("Ginger");
-      if(cloves.pressed()) cart.add("Cloves");
+
+      if (cinnamon.pressed()) cart.add("Cinnamon");
+      if (ginger.pressed()) cart.add("Ginger");
+      if (cloves.pressed()) cart.add("Cloves");
     }
   }
   //leave
@@ -226,15 +251,15 @@ void draw() {
       image(kitchen, 0, 0);
     }
   }
-  
+
   // cursor
   imageMode(CORNER);
   image(cursor, mouseX, mouseY);
 }
 
-void keyPressed(){
-  if(keyPressed && (key == 'W' || key == 'w')) y -= speed;
-  if(keyPressed && (key == 'S' || key == 's')) y += speed;
-  if(keyPressed && (key == 'A' || key == 'a')) x -= speed;
-  if(keyPressed && (key == 'd' || key == 'd')) x += speed;
+void keyPressed() {
+  if (keyPressed && (key == 'W' || key == 'w')) y -= speed;
+  if (keyPressed && (key == 'S' || key == 's')) y += speed;
+  if (keyPressed && (key == 'A' || key == 'a')) x -= speed;
+  if (keyPressed && (key == 'd' || key == 'd')) x += speed;
 }
