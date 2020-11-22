@@ -3,6 +3,7 @@ PFont chancery, cambria;
 int scene, time;
 String flavor;
 int delay = 60;
+int x, y, speed;
 
 void setup() {
   fullScreen();
@@ -58,9 +59,7 @@ void draw() {
   else if (scene == 1) {
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
-    text("instructions", width/2, height/2+300);
-    fill(#dd9a5a);
-    text("Shop at Costco, make a pie, and finish baking it before the time runs out!\nFollow the instructions at each screen and choose the options to make the perfect pie.\nHave fun on your baking adventure!", width/2, height/2);
+    text("Shop at Costco, make a pie, and finish baking it before the time runs out!\nFollow the instructions at each screen and choose the options to make the perfect pie.\nHave fun on your baking adventure!", width/2, height/2+300);
     Button back = new Button(width/2, height/2+400, "go back");
 
     if (back.pressed()) scene = 0;
@@ -136,6 +135,17 @@ void draw() {
   }
   // roaming
   else if (scene == 6) {
+    fill(0);
+    rectMode(CENTER);
+    rect(width/2, height/2-100, 500, 500); 
+    fill(100);
+    rect(width/2, height/2-100, 200, 250); //dry
+    rectMode(CORNER);
+    rect(width/2-250, height/2-350, 200, 100); //dairy
+    rect(width/2+50, height/2-350, 200, 100); //spices
+    rect(width/2+50, height/2+50, 200, 100); //frozen
+    
+    ellipse(x, y, 10, 10);
   }
   //leave
   else if (scene == 7) {
@@ -190,4 +200,11 @@ void draw() {
   // cursor
   imageMode(CORNER);
   image(cursor, mouseX, mouseY);
+}
+
+void keyPressed(){
+  if(keyPressed && key == 'W') x -= speed;
+  if(keyPressed && key == 'S') x += speed;
+  if(keyPressed && key == 'A') y -= speed;
+  if(keyPressed && key == 'S') y += speed;
 }
