@@ -5,7 +5,7 @@ int delay = 30;
 int x, y, speed;
 ArrayList<String> cart = new ArrayList<String>();
 String[] appleList = {"Pie crust", "Sugar", "Apple", "Butter", "Flour"};
-String[] pumpkinList = {"Pie crust", "Sugar", "Cinnamon", "Salt", "Ginger", "Evaporated Milk", "Whipped Cream"};
+String[] pumpkinList = {"Pie crust", "Sugar", "Cinnamon", "Salt", "Ginger", "Cloves", "Evaporated Milk", "Whipped Cream"};
 String[] berryList = {"Pie crust", "Sugar", "Cornstarch", "Ice Cream"};
 String[] shoppingList;
 boolean filled = false;
@@ -53,13 +53,13 @@ void setup() {
   cambria = loadFont("Cambria-30.vlw");
   
   apple = loadImage("appliepie.png");
-  apple.resize(100,100);
+  apple.resize(200,200);
   
   berry = loadImage("berrypie.png");
-  berry.resize(100,100);
+  berry.resize(200,200);
   
   pumpkin = loadImage("pumpkinpie.png");
-  pumpkin.resize(100,100);
+  pumpkin.resize(200,200);
 }
 
 void draw() {
@@ -377,10 +377,12 @@ void draw() {
     rectMode(CENTER);
     noStroke();
   
+    textAlign(CENTER, BOTTOM);
     textFont(cambria);
-    text("Remove the pie from the oven after 45 minutes!", width/2, height/2+400);
+    text("Remove the pie from\nthe oven after 45 minutes!", width/2+700, height/2);
   
     fill(0);
+    textAlign(CENTER, CENTER);
     textSize(35);
     textFont(chancery);
     text("Oven Timer:", width/2-300, height/2-300);
@@ -389,7 +391,7 @@ void draw() {
     fill(175, 238, 238);
     rect(width/2, height/2-300, 200, 70);
   
-    if(new Button(width/2, height/2+400, "Remove").pressed()) scene = 12;
+    if(new Button(width/2+700, height/2+100, "Remove").pressed()) scene = 12;
   
     textAlign(CENTER, CENTER);
     fill(0);
@@ -407,9 +409,14 @@ void draw() {
     else if(shoppingList == berryList) image(berry, width/2, height/2.5);
     else if(shoppingList == pumpkinList) image(pumpkin, width/2, height/2.5);
     
+    score = 10000-Math.abs(45-timeCounter)*300-(shoppingList.length-cart.size())*500;
+    
+    String text = "You scored " + score + " points!";
+    if(score == 10000) text += " Perfect score!";
+    
     textFont(chancery);
     textAlign(CENTER, CENTER);
-    text("You Recieved: " + score + " Points", width/2, height/2);
+    text(text, width/2, height/2);
     
     if(new Button(width/2, height/2+200, "Play again?").pressed()){
       time = 0;
