@@ -1,4 +1,4 @@
-PImage cursor, logo, kitchen, costcoFront, character;
+PImage cursor, logo, kitchen, costcoFront, character, oven, apple, pumpkin, berry;
 PFont chancery, cambria;
 int scene, time;
 int delay = 30;
@@ -10,6 +10,9 @@ String[] berryList = {"Pie crust", "Sugar", "Cornstarch", "Ice Cream"};
 String[] shoppingList;
 boolean filled = false;
 boolean uhOh = false;
+int timeCounter;
+int missedBy;
+int score;
 
 void setup() {
   fullScreen();
@@ -23,6 +26,13 @@ void setup() {
   speed = 5;
   
   shoppingList = appleList;
+  
+  timeCounter = 0;
+  missedBy = abs(timeCounter-15);
+  score = 0;
+
+  oven = loadImage("oven.png");
+  oven.resize(0, displayHeight-100);
 
   cursor = loadImage("data/cursor.png");
   cursor.resize(50, 50);
@@ -41,6 +51,15 @@ void setup() {
 
   chancery = loadFont("Apple-Chancery-35.vlw");
   cambria = loadFont("Cambria-30.vlw");
+  
+  apple = loadImage("appliepie.png");
+  apple.resize(100,100);
+  
+  berry = loadImage("berrypie.png");
+  berry.resize(100,100);
+  
+  pumpkin = loadImage("pumpkinpie.png");
+  pumpkin.resize(100,100);
 }
 
 void draw() {
@@ -62,28 +81,34 @@ void draw() {
     Button instructions = new Button(width/2, height/2 + 120, "Instructions!");
     Button credits = new Button(width/2, height/2 + 240, "Credits!");
 
-    if (start.pressed()) {
-      time = 0;
-      scene = 3;
-    } else if (instructions.pressed()) scene = 1;
-    else if (credits.pressed()) scene = 2;
+    if(time >= delay){
+      if (start.pressed()) {
+        time = 0;
+        scene = 3;
+      }
+      else if (instructions.pressed()) scene = 1;
+      else if (credits.pressed()) scene = 2;
+    }
   }
   //instructions
   else if (scene == 1) {
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
-    text("Shop at Costco, make a pie, and finish baking it before the time runs out!\nFollow the instructions at each screen and choose the options to make the perfect pie.\nHave fun on your baking adventure!", width/2, height/2+300);
-    Button back = new Button(width/2, height/2+400, "go back");
+    text("Shop at Costco, make a pie, and finish baking it before the time runs out!\nFollow the instructions at each screen and choose the options to make the perfect pie.\nHave fun on your baking adventure!", width/2, height/2);
+    Button back = new Button(width/2, height/2+100, "go back");
 
-    if (back.pressed()) scene = 0;
+    if (back.pressed()){
+      time = 0;
+      scene = 0;
+    }
   }
   //credits
   else if (scene == 2) {
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
-    text("credits", width/2, height/2+300);
+    text("credits", width/2, height/2);
 
-    Button back = new Button(width/2, height/2+400, "go back");
+    Button back = new Button(width/2, height/2+100, "go back");
 
     if (back.pressed()) scene = 0;
   }
@@ -318,7 +343,7 @@ void draw() {
     
     rectMode(CENTER);
     fill(200, 200);
-    rect(width/2, height/2+90, 1000, 100);
+    rect(width/2, height/2+90, 1100, 100);
     
     fill(0);
     
@@ -337,19 +362,59 @@ void draw() {
       if(mix.pressed()) filled = true;
       if(fill.pressed()){
         if(!filled) uhOh = true;
-        else scene = 11;
+        else {
+          time = 0;
+          scene = 11;
+        }
       }
     }
   }
   // cook
   else if (scene == 11) {
-    imageMode(CORNER);
-    image(kitchen, 0, 0);
+    imageMode(CENTER);
+    image(oven, width/2, height/2+100);
+  
+    rectMode(CENTER);
+    noStroke();
+  
+    textFont(cambria);
+    text("Remove the pie from the oven after 45 minutes!", width/2, height/2+400);
+  
+    fill(0);
+    textSize(35);
+    textFont(chancery);
+    text("Oven Timer:", width/2-300, height/2-300);
+  
+    rectMode(CENTER);
+    fill(175, 238, 238);
+    rect(width/2, height/2-300, 200, 70);
+  
+    if(new Button(width/2, height/2+400, "Remove").pressed()) scene = 12;
+  
+    textAlign(CENTER, CENTER);
+    fill(0);
+    textSize(35);
+    textFont(chancery);
+    text(timeCounter + ":00", width/2, height/2-300);
+  
+    if(time%10 == 0) timeCounter++;
   }
   // end
   else if (scene == 12) {
-    imageMode(CORNER);
-    image(kitchen, 0, 0);
+    imageMode(CENTER);
+    
+    if(shoppingList == appleList) image(apple, width/2, height/2.5);
+    else if(shoppingList == berryList) image(berry, width/2, height/2.5);
+    else if(shoppingList == pumpkinList) image(pumpkin, width/2, height/2.5);
+    
+    textFont(chancery);
+    textAlign(CENTER, CENTER);
+    text("You Recieved: " + score + " Points", width/2, height/2);
+    
+    if(new Button(width/2, height/2+200, "Play again?").pressed()){
+      time = 0;
+      scene = 0;
+    }
   }
 
   // cursor
