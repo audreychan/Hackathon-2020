@@ -3,7 +3,7 @@ PFont chancery, cambria;
 int scene;
 String flavor;
 int time;
-int delay = 120;
+int delay = 60;
 
 void setup() {
   fullScreen();
@@ -81,6 +81,10 @@ void draw() {
   }
   //past time
   else if(scene == 3){
+    textFont(cambria);
+    textAlign(CENTER, BOTTOM);
+    //text("In the last game, you spent a " + j + " average time playing. You will get a " + j + "time.", width/2, height/2+300);
+    text("You will have ____ to complete this game.", width/2, height/2+100);
     
     if(time >= delay){
       Button cont = new Button(width/2, height/2+200, "continue");
@@ -93,6 +97,9 @@ void draw() {
   }
   //go inside
   else if(scene == 4){
+    textFont(cambria);
+    textAlign(CENTER, BOTTOM);
+    text("You have arrived at Costco to buy the ingredients for your pie! Roam around the store to find everything you need.", width/2, height/2+100);
     
     if(time >= delay){
       Button inside = new Button(width/2, height/2+200, "go inside");
@@ -105,11 +112,14 @@ void draw() {
   }
   //pick fruit
   else if(scene == 5){
+    textFont(cambria);
+    textAlign(CENTER, BOTTOM);
+    text("The first thing you come across is the fruit. Pick the fruit you want to make your pie with!", width/2, height/2+100);
     
     if(time >= delay){
-      Button apple = new Button(width/2 - 145, height/2+200, "Apple");
+      Button apple = new Button(width/2 - 300, height/2+200, "Apple");
       Button berries = new Button(width/2, height/2+200, "Berries");
-      Button pumpkin = new Button(width/2 + 145, height/2+200, "Pumpkin");
+      Button pumpkin = new Button(width/2 + 300, height/2+200, "Pumpkin");
       
       if(apple.pressed()){
         flavor = "apple";
