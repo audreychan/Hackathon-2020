@@ -5,6 +5,10 @@ String flavor;
 int delay = 60;
 int x, y, speed;
 ArrayList<String> cart = new ArrayList<String>();
+String[] appleList = {"Pie crust", "Sugar", "Apple", "Butter", "Flour"};
+String[] pumpkinList = {"Pie crust", "Sugar", "Cinnamon", "Salt", "Ginger", "Evaporated Milk", "Whipped Cream"};
+String[] berryList = {"Pie crust", "Sugar", "Cornstarch", "Ice Cream"};
+String[] shoppingList;
 
 void setup() {
   fullScreen();
@@ -42,7 +46,7 @@ void draw() {
   background(#dd5a5d);
 
   //a frame counter
-  time ++;
+  time++;
 
   //start scene
   if (scene == 0) {
@@ -126,15 +130,15 @@ void draw() {
       Button pumpkin = new Button(width/2 + 300, height/2+200, "Pumpkin");
       
       if(apple.pressed()){
-        flavor = "apple";
+        shoppingList = appleList;
         time = 0;
         scene = 6;
       } else if (berries.pressed()) {
-        flavor = "berries";
+        shoppingList = berryList;
         time = 0;
         scene = 6;
       } else if (pumpkin.pressed()) {
-        flavor = "pumpkin";
+        shoppingList = pumpkinList;
         time = 0;
         scene = 6;
       }
@@ -158,36 +162,87 @@ void draw() {
     fill(0);
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
-    text("Use WASD to move around the map! Pick up the ingredients you need by going into that area and clicking the ingredient.", width/2, height/2-700);
+    text("Use WASD to move around the map! Pick up the ingredients you need by going into that area and clicking the ingredient.", width/2, height/2-400);
     
     if(x >= width/2-250 && x <= width/2-50 && y >= height/2-350 && y <= height/2-250){ //dairy
       Button butter = new Button(width/2-300, height/2+400, "butter");
       Button evapMilk = new Button(width/2, height/2+400, "evap. milk");
       Button whippedCream = new Button(width/2+300, height/2+400, "whipped cream");
       
-      if(butter.pressed()) cart.add("Butter");
-      if(evapMilk.pressed()) cart.add("Evaporated Milk");
-      if(whippedCream.pressed()) cart.add("Whipped Cream");
+      if(butter.pressed() && time >= 30){
+        time = 0;
+        cart.add("Butter");
+      }
+      if(evapMilk.pressed() && time >= 30) {
+        time = 0;
+        cart.add("Evaporated Milk");
+      }
+      if(whippedCream.pressed() && time >= 30) {
+        time = 0;
+        cart.add("Whipped Cream");
+      }
     }
     if(x >= width/2+50 && x <= width/2+250 && y >= height/2-350 && y <= height/2-250){ //spices
       Button cinnamon = new Button(width/2-300, height/2+400, "Cinnamon");
       Button ginger = new Button(width/2, height/2+400, "Ginger");
       Button cloves = new Button(width/2+300, height/2+400, "Cloves");
       
-      if(cinnamon.pressed()) cart.add("Cinnamon");
-      if(ginger.pressed()) cart.add("Ginger");
-      if(cloves.pressed()) cart.add("Cloves");
+      if(cinnamon.pressed() && time >= 30) {
+        time = 0;
+        cart.add("Cinnamon");
+      }
+      if(ginger.pressed() && time >= 30) {
+        time = 0;
+        cart.add("Ginger");
+      }
+      if(cloves.pressed() && time >= 30) {
+        time = 0;
+        cart.add("Cloves");
+      }
     }
     if(x >= width/2+50 && x <= width/2+250 && y >= height/2+50 && y <= height/2+150){ //frozen
-      if(new Button(width/2, height/2+400, "Ice Cream").pressed()) cart.add("Ice Cream");
+      if(new Button(width/2, height/2+400, "Ice Cream").pressed() && time >= 30) {
+        time = 0;
+        cart.add("Ice Cream");
+      }
     }
     if(x >= width/2-100 && x <= width/2+100 && y >= height/2-225 && y <= height/2+25){ //dry
-      if(new Button(width/2-600, height/2+400, "Pie crust").pressed()) cart.add("Pie Crust");
-      if(new Button(width/2-300, height/2+400, "Sugar").pressed()) cart.add("Sugar");
-      if(new Button(width/2, height/2+400, "Flour").pressed()) cart.add("Flour");
-      if(new Button(width/2+300, height/2+400, "Cornstarch").pressed()) cart.add("Cornstarch");
-      if(new Button(width/2+600, height/2+400, "Salt").pressed()) cart.add("Salt");
+      if(new Button(width/2-600, height/2+400, "Pie crust").pressed() && time >= 30) {
+        time = 0;
+        cart.add("Pie Crust");
+      }
+      if(new Button(width/2-300, height/2+400, "Sugar").pressed() && time >= 30) {
+        time = 0;
+        cart.add("Sugar");
+      }
+      if(new Button(width/2, height/2+400, "Flour").pressed() && time >= 30) {
+        time = 0;
+        cart.add("Flour");
+      }
+      if(new Button(width/2+300, height/2+400, "Cornstarch").pressed() && time >= 30) {
+        time = 0;
+        cart.add("Cornstarch");
+      }
+      if(new Button(width/2+600, height/2+400, "Salt").pressed() && time >= 30) {
+        time = 0;
+        cart.add("Salt");
+      }
     }
+    
+    String cartList = "Cart:\n";
+    for(String i : cart){
+      cartList += i + "\n";
+    }
+    textAlign(LEFT, TOP);
+    textFont(cambria);
+    text(cartList, width/2-800, height/2-200);
+    
+    String list = "Shopping List:\n";
+    for(String i : shoppingList){
+      list += i + "\n";
+    }
+    
+    if(new Button(width/2+700, height/2+450, "finish").pressed()) scene = 7;
   }
   //leave
   else if (scene == 7) {
