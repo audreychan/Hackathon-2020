@@ -40,6 +40,7 @@ void draw() {
   if (scene == 0) {
     // logo
     imageMode(CENTER);
+
     image(logo, width/2, height/2 - 300);
 
     // start screen buttons
@@ -94,69 +95,68 @@ void draw() {
 
     if (inside.pressed()) scene = 5;
     //go inside
-    else if (scene == 4) {
 
-      if (time >= delay) {
-        if (inside.pressed()) {
-          time = 0;
-          scene = 5;
-        }
+    if (time >= delay) {
+      if (inside.pressed()) {
+        time = 0;
+        scene = 5;
       }
     }
-    //pick fruit
-    else if (scene == 5) {
+  }
+  //pick fruit
+  else if (scene == 5) {
 
-      if (time >= delay) {
-        Button apple = new Button(width/2 - 145, height/2+200, "Apple");
-        Button berries = new Button(width/2, height/2+200, "Berries");
-        Button pumpkin = new Button(width/2 + 145, height/2+200, "Pumpkin");
+    if (time >= delay) {
+      Button apple = new Button(width/2 - 145, height/2+200, "Apple");
+      Button berries = new Button(width/2, height/2+200, "Berries");
+      Button pumpkin = new Button(width/2 + 145, height/2+200, "Pumpkin");
 
-        if (apple.pressed()) {
-          flavor = "apple";
-          time = 0;
-          scene = 6;
-        } else if (berries.pressed()) {
-          flavor = "berries";
-          time = 0;
-          scene = 6;
-        } else if (pumpkin.pressed()) {
-          flavor = "pumpkin";
-          time = 0;
-          scene = 6;
-        }
+      if (apple.pressed()) {
+        flavor = "apple";
+        time = 0;
+        scene = 6;
+      } else if (berries.pressed()) {
+        flavor = "berries";
+        time = 0;
+        scene = 6;
+      } else if (pumpkin.pressed()) {
+        flavor = "pumpkin";
+        time = 0;
+        scene = 6;
       }
     }
-    // roaming
-    else if (scene == 6) {
-    }
-    //leave
-    else if (scene == 7) {
-      imageMode(CORNER);
-      image(kitchen, 0, 0);
+  }
+  // roaming
+  else if (scene == 6) {
+  }
+  //leave
+  else if (scene == 7) {
+    imageMode(CORNER);
+    image(kitchen, 0, 0);
 
-      if (time >= delay) {
-        Button leave = new Button(width/2, height/2+200, "leave");
+    if (time >= delay) {
+      Button leave = new Button(width/2, height/2+200, "leave");
 
-        if (leave.pressed()) {
-          time = 0;
-          scene = 8;
-        }
+      if (leave.pressed()) {
+        time = 0;
+        scene = 8;
       }
     }
-    //get home
-    else if (scene == 8) {
-      imageMode(CORNER);
-      image(kitchen, 0, 0);
+  }
+  //get home
+  else if (scene == 8) {
+    imageMode(CORNER);
+    image(kitchen, 0, 0);
 
-      if (time >= delay) {
-        Button cook = new Button(width/2, height/2+200, "start cooking");
+    if (time >= delay) {
+      Button cook = new Button(width/2, height/2+200, "start cooking");
 
-        if (cook.pressed()) {
-          time = 0;
-          scene = 9;
-        }
+      if (cook.pressed()) {
+        time = 0;
+        scene = 9;
       }
     }
+
     // pie crust
     else if (scene == 9) {
       imageMode(CORNER);
@@ -177,9 +177,9 @@ void draw() {
       imageMode(CORNER);
       image(kitchen, 0, 0);
     }
-
-    // cursor
-    imageMode(CORNER);
-    image(cursor, mouseX, mouseY);
   }
+  
+  // cursor
+  imageMode(CORNER);
+  image(cursor, mouseX, mouseY);
 }
