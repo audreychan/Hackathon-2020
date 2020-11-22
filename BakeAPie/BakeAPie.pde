@@ -14,8 +14,8 @@ void setup() {
   scene = 0;
   flavor = "unidentified";
   time = 0;
-  x = width/2;
-  y = height/2-100;
+  x = width/2-150;
+  y = height/2+100;
   speed = 5;
 
   cursor = loadImage("data/cursor.png");
@@ -158,20 +158,32 @@ void draw() {
     text("Use WASD to move around the map! Pick up the ingredients you need by going into that area and clicking the ingredient.", width/2, height/2-700);
     
     if(x >= width/2-250 && x <= width/2-50 && y >= height/2-350 && y <= height/2-250){ //dairy
-      Button butter = new Button(width/2, height/2+200, "butter");
-      Button whippedCream = new Button(width/2, height/2+200, "whipped cream");
+      Button butter = new Button(width/2-300, height/2+400, "butter");
+      Button evapMilk = new Button(width/2, height/2+400, "evap. milk");
+      Button whippedCream = new Button(width/2+300, height/2+400, "whipped cream");
       
       if(butter.pressed()) cart.add("Butter");
+      if(evapMilk.pressed()) cart.add("Evaporated Milk");
       if(whippedCream.pressed()) cart.add("Whipped Cream");
     }
-    if(x >= width/2-250 && x <= width/2-50 && y >= height/2-350 && y <= height/2-250){ //spices
-      Button cinnamon = new Button(width/2, height/2+200, "Cinnamon");
-      Button ginger = new Button(width/2, height/2+200, "Ginger");
-      Button cloves = new Button(width/2, height/2+200, "Cloves");
+    if(x >= width/2+50 && x <= width/2+250 && y >= height/2-350 && y <= height/2-250){ //spices
+      Button cinnamon = new Button(width/2-300, height/2+400, "Cinnamon");
+      Button ginger = new Button(width/2, height/2+400, "Ginger");
+      Button cloves = new Button(width/2+300, height/2+400, "Cloves");
       
       if(cinnamon.pressed()) cart.add("Cinnamon");
       if(ginger.pressed()) cart.add("Ginger");
       if(cloves.pressed()) cart.add("Cloves");
+    }
+    if(x >= width/2+50 && x <= width/2+250 && y >= height/2+50 && y <= height/2+150){ //frozen
+      if(new Button(width/2, height/2+400, "Ice Cream").pressed()) cart.add("Ice Cream");
+    }
+    if(x >= width/2-100 && x <= width/2+100 && y >= height/2-225 && y <= height/2+25){ //dry
+      if(new Button(width/2-600, height/2+400, "Pie crust").pressed()) cart.add("Pie Crust");
+      if(new Button(width/2-300, height/2+400, "Sugar").pressed()) cart.add("Sugar");
+      if(new Button(width/2, height/2+400, "Flour").pressed()) cart.add("Flour");
+      if(new Button(width/2+300, height/2+400, "Cornstarch").pressed()) cart.add("Cornstarch");
+      if(new Button(width/2+600, height/2+400, "Salt").pressed()) cart.add("Salt");
     }
   }
   //leave
