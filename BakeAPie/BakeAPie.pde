@@ -1,13 +1,15 @@
 PImage cursor, logo, kitchen, costcoFront, character;
 PFont chancery, cambria;
 int scene, time;
-int delay = 60;
+int delay = 30;
 int x, y, speed;
 ArrayList<String> cart = new ArrayList<String>();
 String[] appleList = {"Pie crust", "Sugar", "Apple", "Butter", "Flour"};
 String[] pumpkinList = {"Pie crust", "Sugar", "Cinnamon", "Salt", "Ginger", "Evaporated Milk", "Whipped Cream"};
 String[] berryList = {"Pie crust", "Sugar", "Cornstarch", "Ice Cream"};
 String[] shoppingList;
+boolean filled = false;
+boolean uhOh = false;
 
 void setup() {
   fullScreen();
@@ -105,6 +107,11 @@ void draw() {
   else if(scene == 4){
     image(costcoFront, 0, 0);
 
+    rectMode(CENTER);
+    fill(200, 200);
+    rect(width/2, height/2+90, 1700, 100);
+    
+    fill(0);
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
     text("You have arrived at Costco to buy the ingredients for your pie! Roam around the store to find everything you need.", width/2, height/2+100);
@@ -266,7 +273,12 @@ void draw() {
   else if (scene == 8) {
     imageMode(CORNER);
     image(kitchen, 0, 0);
+      
+    rectMode(CENTER);
+    fill(200, 200);
+    rect(width/2, height/2+90, 800, 100);
     
+    fill(0);
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
     text("You're home now, time to start!", width/2, height/2+100);
@@ -279,51 +291,67 @@ void draw() {
         scene = 9;
       }
     }
-
-    // pie crust
-    else if (scene == 9) {
-      imageMode(CORNER);
-      image(kitchen, 0, 0);
-      
-      textFont(cambria);
-      textAlign(CENTER, BOTTOM);
-      text("First, you have to cook the crust. Put it in the oven for 15 minutes.", width/2, height/2+100);
-      
-      if(time >= delay && new Button(width/2, height/2+200, "Cook the crust").pressed()){
-        time = 0;
-        scene = 10;
-      }
-      
+  }
+  // pie crust
+  else if (scene == 9) {
+    imageMode(CORNER);
+    image(kitchen, 0, 0);
+    
+    rectMode(CENTER);
+    fill(200, 200);
+    rect(width/2, height/2+90, 900, 100);
+    
+    fill(0);
+    textFont(cambria);
+    textAlign(CENTER, BOTTOM);
+    text("First, you have to cook the crust. Put it in the oven for 15 minutes.", width/2, height/2+100);
+    
+    if(time >= delay && new Button(width/2, height/2+200, "Cook the crust").pressed()){
+      time = 0;
+      scene = 10;
     }
-    // filling
-    else if (scene == 10) {
-      imageMode(CORNER);
-      image(kitchen, 0, 0);
-      String text = "Now that the crust is cooked, time for filling! Mix the filling and fill the crust.";
+  }
+  // filling
+  else if (scene == 10) {
+    imageMode(CORNER);
+    image(kitchen, 0, 0);
+    
+    rectMode(CENTER);
+    fill(200, 200);
+    rect(width/2, height/2+90, 1000, 100);
+    
+    fill(0);
+    
+    String text = "";
+    if(!uhOh) text = "Now that the crust is cooked, time for filling! Mix the filling and fill the crust.";
+    else text = "Uh oh. Don't forget to mix first!";
+    
+    textFont(cambria);
+    textAlign(CENTER, BOTTOM);
+    text(text, width/2, height/2+100);
+    
+    if(time >= delay){
+      Button mix = new Button(width/2-135, height/2+200, "Mix the filling");
+      Button fill = new Button(width/2+135, height/2+200, "Fill");
       
-      textFont(cambria);
-      textAlign(CENTER, BOTTOM);
-      text(text, width/2, height/2+100);
-      
-      boolean filled = false;
-      if(time >= delay && new Button(width/2-135, height/2+200, "Mix the filling").pressed()) filled = true;
-      if(time >= delay && new Button(width/2+135, height/2+200, "Fill").pressed()){
-        if(!filled) text = "Uh oh. Don't forget to mix first!";
+      if(mix.pressed()) filled = true;
+      if(fill.pressed()){
+        if(!filled) uhOh = true;
         else scene = 11;
       }
     }
-    // cook
-    else if (scene == 11) {
-      imageMode(CORNER);
-      image(kitchen, 0, 0);
-    }
-    // end
-    else if (scene == 12) {
-      imageMode(CORNER);
-      image(kitchen, 0, 0);
-    }
   }
-  
+  // cook
+  else if (scene == 11) {
+    imageMode(CORNER);
+    image(kitchen, 0, 0);
+  }
+  // end
+  else if (scene == 12) {
+    imageMode(CORNER);
+    image(kitchen, 0, 0);
+  }
+
   // cursor
   imageMode(CORNER);
   image(cursor, mouseX, mouseY);
