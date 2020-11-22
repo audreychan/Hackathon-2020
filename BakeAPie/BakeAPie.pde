@@ -1,8 +1,7 @@
-PImage cursor, logo, kitchen, costco;
+PImage cursor, logo, kitchen, costcoFront;
 PFont chancery, cambria;
-int scene;
+int scene, time;
 String flavor;
-int time;
 int delay = 60;
 
 void setup() {
@@ -13,18 +12,15 @@ void setup() {
   scene = 0;
   flavor = "unidentified";
   time = 0;
-  
+
   cursor = loadImage("data/cursor.png");
   cursor.resize(50, 50);
 
   logo = loadImage("data/PieFly.png");
-  logo.resize(0, 1000);
-  
-  costco = loadImage("costco.png");
-  costco.resize(displayWidth, displayHeight);
-  
-
   logo.resize(0, 700);
+
+  costcoFront = loadImage("data/costcoFront.png");
+  costcoFront.resize(width, height);
 
   kitchen = loadImage("data/kitchen.png");
   kitchen.resize(width, height);
@@ -36,10 +32,10 @@ void setup() {
 void draw() {
   // start screen setup
   background(#dd5a5d);
-  
+
   //a frame counter
   time ++;
-  
+
   //start scene
   if (scene == 0) {
     // logo
@@ -51,30 +47,30 @@ void draw() {
     Button start = new Button(width/2, height/2, "Start!");
     Button instructions = new Button(width/2, height/2 + 120, "Instructions!");
     Button credits = new Button(width/2, height/2 + 240, "Credits!");
-    
-    if(start.pressed()){
+
+    if (start.pressed()) {
       time = 0;
       scene = 3;
-    }
-    else if(instructions.pressed()) scene = 1;
-    else if(credits.pressed()) scene = 2;
+    } else if (instructions.pressed()) scene = 1;
+    else if (credits.pressed()) scene = 2;
   }
   //instructions
-  else if(scene == 1){
+  else if (scene == 1) {
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
     text("instructions", width/2, height/2+300);
-    
+    fill(#dd9a5a);
+    text("Shop at Costco, make a pie, and finish baking it before the time runs out!\nFollow the instructions at each screen and choose the options to make the perfect pie.\nHave fun on your baking adventure!", width/2, height/2);
     Button back = new Button(width/2, height/2+400, "go back");
 
     if (back.pressed()) scene = 0;
   }
   //credits
-  else if(scene == 2){
+  else if (scene == 2) {
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
-    text("credit", width/2, height/2+300);
-    
+    text("credits", width/2, height/2+300);
+
     Button back = new Button(width/2, height/2+400, "go back");
 
     if (back.pressed()) scene = 0;
@@ -88,8 +84,8 @@ void draw() {
     
     if(time >= delay){
       Button cont = new Button(width/2, height/2+200, "continue");
-      
-      if(cont.pressed()){
+
+      if (cont.pressed()) {
         time = 0;
         scene = 4;
       }
@@ -97,6 +93,8 @@ void draw() {
   }
   //go inside
   else if(scene == 4){
+    image(costcoFront, 0, 0);
+
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
     text("You have arrived at Costco to buy the ingredients for your pie! Roam around the store to find everything you need.", width/2, height/2+100);
@@ -125,13 +123,11 @@ void draw() {
         flavor = "apple";
         time = 0;
         scene = 6;
-      }
-      else if(berries.pressed()){
+      } else if (berries.pressed()) {
         flavor = "berries";
         time = 0;
         scene = 6;
-      }
-      else if(pumpkin.pressed()){
+      } else if (pumpkin.pressed()) {
         flavor = "pumpkin";
         time = 0;
         scene = 6;
@@ -142,55 +138,55 @@ void draw() {
   else if (scene == 6) {
   }
   //leave
-  else if(scene == 7){
+  else if (scene == 7) {
     imageMode(CORNER);
     image(kitchen, 0, 0);
-    
-    if(time >= delay){
+
+    if (time >= delay) {
       Button leave = new Button(width/2, height/2+200, "leave");
-      
-      if(leave.pressed()) {
+
+      if (leave.pressed()) {
         time = 0;
         scene = 8;
       }
     }
   }
-
   //get home
-  else if(scene == 8){
+  else if (scene == 8) {
     imageMode(CORNER);
     image(kitchen, 0, 0);
-    
-    if(time >= delay){
+
+    if (time >= delay) {
       Button cook = new Button(width/2, height/2+200, "start cooking");
-      
-      if(cook.pressed()) {
+
+      if (cook.pressed()) {
         time = 0;
         scene = 9;
       }
     }
-  }
-  // pie crust
-  else if (scene == 9) {
-    imageMode(CORNER);
-    image(kitchen, 0, 0);
-  }
-  // filling
-  else if (scene == 10) {
-    imageMode(CORNER);
-    image(kitchen, 0, 0);
-  }
-  // cook
-  else if (scene == 11) {
-    imageMode(CORNER);
-    image(kitchen, 0, 0);
-  }
-  // end
-  else if (scene == 12) {
-    imageMode(CORNER);
-    image(kitchen, 0, 0);
-  }
 
+    // pie crust
+    else if (scene == 9) {
+      imageMode(CORNER);
+      image(kitchen, 0, 0);
+    }
+    // filling
+    else if (scene == 10) {
+      imageMode(CORNER);
+      image(kitchen, 0, 0);
+    }
+    // cook
+    else if (scene == 11) {
+      imageMode(CORNER);
+      image(kitchen, 0, 0);
+    }
+    // end
+    else if (scene == 12) {
+      imageMode(CORNER);
+      image(kitchen, 0, 0);
+    }
+  }
+  
   // cursor
   imageMode(CORNER);
   image(cursor, mouseX, mouseY);
