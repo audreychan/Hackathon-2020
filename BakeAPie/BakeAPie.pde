@@ -4,6 +4,7 @@ int scene, time;
 String flavor;
 int delay = 60;
 int x, y, speed;
+ArrayList<String> cart = new ArrayList<String>();
 
 void setup() {
   fullScreen();
@@ -13,6 +14,9 @@ void setup() {
   scene = 0;
   flavor = "unidentified";
   time = 0;
+  x = width/2;
+  y = height/2-100;
+  speed = 5;
 
   cursor = loadImage("data/cursor.png");
   cursor.resize(50, 50);
@@ -56,7 +60,7 @@ void draw() {
     else if (credits.pressed()) scene = 2;
   }
   //instructions
-  else if (scene == 1) {
+  else if (scene == 6) {
     textFont(cambria);
     textAlign(CENTER, BOTTOM);
     text("Shop at Costco, make a pie, and finish baking it before the time runs out!\nFollow the instructions at each screen and choose the options to make the perfect pie.\nHave fun on your baking adventure!", width/2, height/2+300);
@@ -134,7 +138,7 @@ void draw() {
     }
   }
   // roaming
-  else if (scene == 6) {
+  else if (scene == 1) {
     fill(0);
     rectMode(CENTER);
     rect(width/2, height/2-100, 500, 500); 
@@ -145,7 +149,30 @@ void draw() {
     rect(width/2+50, height/2-350, 200, 100); //spices
     rect(width/2+50, height/2+50, 200, 100); //frozen
     
+    fill(255);
     ellipse(x, y, 10, 10);
+    
+    fill(0);
+    textFont(cambria);
+    textAlign(CENTER, BOTTOM);
+    text("Use WASD to move around the map! Pick up the ingredients you need by going into that area and clicking the ingredient.", width/2, height/2-700);
+    
+    if(x >= width/2-250 && x <= width/2-50 && y >= height/2-350 && y <= height/2-250){ //dairy
+      Button butter = new Button(width/2, height/2+200, "butter");
+      Button whippedCream = new Button(width/2, height/2+200, "whipped cream");
+      
+      if(butter.pressed()) cart.add("Butter");
+      if(whippedCream.pressed()) cart.add("Whipped Cream");
+    }
+    if(x >= width/2-250 && x <= width/2-50 && y >= height/2-350 && y <= height/2-250){ //spices
+      Button cinnamon = new Button(width/2, height/2+200, "Cinnamon");
+      Button ginger = new Button(width/2, height/2+200, "Ginger");
+      Button cloves = new Button(width/2, height/2+200, "Cloves");
+      
+      if(cinnamon.pressed()) cart.add("Cinnamon");
+      if(ginger.pressed()) cart.add("Ginger");
+      if(cloves.pressed()) cart.add("Cloves");
+    }
   }
   //leave
   else if (scene == 7) {
@@ -203,8 +230,8 @@ void draw() {
 }
 
 void keyPressed(){
-  if(keyPressed && key == 'W') x -= speed;
-  if(keyPressed && key == 'S') x += speed;
-  if(keyPressed && key == 'A') y -= speed;
-  if(keyPressed && key == 'S') y += speed;
+  if(keyPressed && (key == 'W' || key == 'w')) y -= speed;
+  if(keyPressed && (key == 'S' || key == 's')) y += speed;
+  if(keyPressed && (key == 'A' || key == 'a')) x -= speed;
+  if(keyPressed && (key == 'd' || key == 'd')) x += speed;
 }
